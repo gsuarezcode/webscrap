@@ -1,0 +1,54 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
+import requests
+from bs4 import BeautifulSoup
+import re
+
+def BancoGalicia():
+    options = Options()
+    options.add_argument("--headless") # te permite hacer el scrap sin que se te abra el navegador
+    driver = webdriver.Chrome('./chromedriver', options=options)
+    url = "https://www.bancogalicia.com/banca/online/web/Personas/ProductosyServicios/Cotizador"
+    driver.get(url)
+    time.sleep(1) # permite que el JavaScript cargue para que no falle el request
+
+    dolar_venta = driver.find_elements_by_xpath('.//*[@id="Badge_0"]/div[3]')[0].text
+    dolar_compra = driver.find_elements_by_xpath('.//*[@id="Badge_0"]/div[2]')[0].text
+
+    galicia = 'El valor del dolar para comprarlo en Galicia es' + ' ' + dolar_venta
+    galicia1 = 'El valor del dolar para venderlo en Galicia es' + ' ' + dolar_compra
+    print(galicia)
+    print(galicia1)
+
+def BancoNacion():
+    options = Options()
+    options.add_argument("--headless")  # te permite hacer el scrap sin que se te abra el navegador
+    driver = webdriver.Chrome('./chromedriver', options=options)
+    url = 'https://www.bna.com.ar/Personas'
+    driver.get(url)
+    time.sleep(1)  # permite que el JavaScript cargue para que no falle el request
+
+    dolar_venta = driver.find_elements_by_xpath('.//*[@id="billetes"]/table/tbody/tr[1]/td[3]')[0].text
+    dolar_compra = driver.find_elements_by_xpath('.//*[@id="billetes"]/table/tbody/tr[1]/td[2]')[0].text
+
+    bna = 'El valor del dolar para comprarlo en Banco Nacion es' + ' ' + dolar_venta
+    bna1 = 'El valor del dolar para venderlo en Banco Nacion es' + ' ' + dolar_compra
+    print(bna)
+    print(bna1)
+
+def BancoSupervielle():
+    options = Options()
+    options.add_argument("--headless")  # te permite hacer el scrap sin que se te abra el navegador
+    driver = webdriver.Chrome('./chromedriver', options=options)
+    url = 'https://personas.supervielle.com.ar/Pages/QuotesPanel/Quotes.aspx'
+    driver.get(url)
+    time.sleep(1)  # permite que el JavaScript cargue para que no falle el request
+
+    dolar_venta = driver.find_elements_by_xpath('.//*[@id="gvCotizaciones"]/tbody/tr[2]/td[3]')[0].text
+    dolar_compra = driver.find_elements_by_xpath('.//*[@id="gvCotizaciones"]/tbody/tr[2]/td[2]')[0].text
+
+    supv = 'El valor del dolar para comprarlo en Banco Supervielle es' + ' ' + dolar_venta
+    supv1 = 'El valor del dolar para venderlo en Banco Supervielle es' + ' ' + dolar_compra
+    print(supv)
+    print(supv1)
